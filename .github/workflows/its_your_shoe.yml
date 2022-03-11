@@ -1,4 +1,4 @@
-name: Deploy Theme
+name: Deploy Theme To Its Your Shoe
 on:
   push:
     branches:
@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "HYVOR_TALK_WEBSITE_CODE"
+          replace: ${{ secrets.ITS_YOUR_SHOE_HYVOR_WEBSITE_KEY }}
+          regex: false
       - uses: TryGhost/action-deploy-theme@v1.4.1
         with:
           api-url: ${{ secrets.ITS_YOUR_SHOE_GHOST_ADMIN_API_URL }}
