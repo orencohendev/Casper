@@ -1,0 +1,22 @@
+name: Deploy Theme Oren Codes
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "HYVOR_TALK_WEBSITE_CODE"
+          replace: ${{ secrets.OREN_CODES_HYVOR_WEBSITE_KEY }}
+          regex: false
+      - uses: TryGhost/action-deploy-theme@v1.4.1
+        with:
+          api-url: ${{ secrets.OREN_CODES_GHOST_ADMIN_API_URL }}
+          api-key: ${{ secrets.OREN_CODES_GHOST_ADMIN_API_KEY }}
+          theme-name: "casper-by-oren"
